@@ -28,6 +28,7 @@ use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\RequestOptions;
 use Throwable;
 
 use function call_user_func;
@@ -379,7 +380,7 @@ class GuzzleRetryMiddleware
         }
 
         // Delay!
-        usleep((int) ($delayTimeout * 1e6));
+        $options[RequestOptions::DELAY] = (int)($delayTimeout * 1000);
 
         // Return
         return $this($request, $options);
